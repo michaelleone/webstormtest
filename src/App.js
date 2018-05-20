@@ -8,7 +8,7 @@ const faker = require('faker')
 class App extends Component {
   state = {
     persons: [
-      { name: faker.name.firstName(), age: Math.floor(Math.random()*50), id: Math.random()*9999999},
+      { name: 'The Real McCoy!', age: Math.floor(Math.random()*50), id: Math.random()*9999999},
       { name: faker.name.firstName(), age: Math.floor(Math.random()*50), id: Math.random()*9999999},
       { name: faker.name.firstName(), age: Math.floor(Math.random()*50), id: Math.random()*9999999}
     ],
