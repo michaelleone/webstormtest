@@ -1,11 +1,41 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import Person from './Person/Person.js'
 import './Person/Person.css'
+
+// eslint-disable-next-line
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
+
 const faker = require('faker')
 
-class App extends Component {
+class App extends PureComponent {
+  constructor (props) {
+    super(props)
+    console.log('[App.js] Inside Constructor', props)
+  }
+  componentWillMount () {
+    console.log('[App.js] Inside componentWillMount()')
+  }
+
+  componentDidMount () {
+    console.log('[App.js] Inside componentDidMount()')
+  }
+
+  /* shouldComponentUpdate (nextProps, nextState) {
+    console.log('[UPDATE App.js] Inside shouldComponentUpdate', nextProps, nextState)
+    return nextState.persons !== this.state.persons ||
+      nextState.showPersons !== this.state.showPersons
+  } */
+
+  componentWillUpdate (nextProps, nextState) {
+    console.log('[UPDATE App.js] Inside componentWillUpdate', nextProps, nextState)
+  }
+
+  componentDidUpdate () {
+    console.log('[UPDATE App.js] Inside componentDidUpdate')
+  }
+
   state = {
     persons: [
       { name: 'The Real McCoy!', age: Math.floor(Math.random() * 50), id: Math.random() * 9999999 },
@@ -69,12 +99,13 @@ class App extends Component {
       persons = (
         <div className='row'>
           {this.state.persons.map((person, index) => {
-            return <div className='col-md-4'> <Person
+            return <div className='col-md-4' key={person.id}><Person
               click={() => this.deletePersonHandler(index)}
               changed={(event) => this.nameChangeHandler(event, person.id, index)}
-              key={person.id}
               name={person.name}
-              age={person.age} /></div>
+              age={person.age}
+            />
+            </div>
           })}
         </div>
       )
@@ -87,6 +118,7 @@ class App extends Component {
           <h1 className='App-title'>Welcome to React</h1>
           <button className='btn btn-primary btnMain' onClick={this.randomNameHandler}>Randomize</button>
           <button className='btn btn-primary btnMain' onClick={this.togglePersonsHandler}>Toggle View</button>
+          <button className='btn btn-primary brnMain' onClick={() => this.setState({showPersons: true})}> Show Persons</button>
         </header>
         <div className='container'>
 
